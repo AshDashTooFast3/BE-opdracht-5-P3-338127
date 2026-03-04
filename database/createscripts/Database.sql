@@ -41,12 +41,10 @@ CREATE TABLE Leverancier (
     ContactPersoon VARCHAR(100) NOT NULL,
     LeverancierNummer VARCHAR(20) NOT NULL,
     Mobiel VARCHAR(20) NOT NULL,
-    ContactId INT UNSIGNED NULL,
     IsActief BIT NOT NULL DEFAULT 1,
     Opmerking VARCHAR(255) NULL,
     DatumAangemaakt DATETIME(6) NOT NULL DEFAULT SYSDATE(6),
-    DatumGewijzigd DATETIME(6) NOT NULL DEFAULT SYSDATE(6),
-    FOREIGN KEY (ContactId) REFERENCES Contact(Id)
+    DatumGewijzigd DATETIME(6) NOT NULL DEFAULT SYSDATE(6)
 );
 
 INSERT INTO Leverancier (Id,Naam, ContactPersoon, LeverancierNummer, Mobiel, ContactId, IsActief, Opmerking, DatumAangemaakt, DatumGewijzigd) VALUES
