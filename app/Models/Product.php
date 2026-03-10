@@ -27,8 +27,8 @@ class Product extends Model
         return $this->hasMany(Magazijn::class, 'ProductId');
     }
 
-    public function pakAlleProducten()
+    public function pakAlleProducten(int $perPage, int $offset )
     {
-        return DB::select('CALL pakAlleProducten()');
+        return DB::select('CALL pakAlleProducten(?, ?)', [$perPage, $offset]);
     }
 }

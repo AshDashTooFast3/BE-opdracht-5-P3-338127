@@ -4,7 +4,10 @@ DROP PROCEDURE IF EXISTS pakAlleProducten;
 
 DELIMITER $$
 
-CREATE PROCEDURE pakAlleProducten()
+CREATE PROCEDURE pakAlleProducten(
+    IN p_perPage INT,
+    IN p_offset INT
+)
 BEGIN
     SELECT DISTINCT
         LEV.Naam AS LeverancierNaam,
@@ -14,9 +17,10 @@ BEGIN
     FROM Product PROD
     INNER JOIN Magazijn MAG ON PROD.ID = MAG.ProductId
     INNER JOIN ProductPerLeverancier PPL ON PPL.ProductId = PROD.Id
-    INNER JOIN Leverancier LEV ON PPL.LeverancierId = LEV.Id;
+    INNER JOIN Leverancier LEV ON PPL.LeverancierId = LEV.Id
+    LIMIT p_perPage OFFSET p_offset;
 END $$
 
 DELIMITER ;
 
-CALL pakAlleProducten();
+CALL pakAlleProducten(4, 0);

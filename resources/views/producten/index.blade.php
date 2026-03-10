@@ -53,9 +53,9 @@
             </table>
             <div class="d-flex justify-content-between align-items-center">
                 <!-- Paginatie -->
-                {{-- <div class="mt-3">
-                    {{ $ProductVanEenAllergeen->links('pagination::bootstrap-5') }}
-                </div> --}}
+                <div class="mt-3">
+                    {{ $producten->links('pagination::bootstrap-4') }}
+                </div>
                 <a href="{{ route('welcome') }}" class="btn btn-secondary">
                     Home
                 </a>
