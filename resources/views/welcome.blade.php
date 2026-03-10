@@ -19,10 +19,10 @@
                 <hr>
             </h1>
         </div>
-        {{-- <a href="{{ route('producten.index') }}" class="border-bottom text-decoration-none text-dark d-inline-block"
+        <a href="{{ route('producten.index') }}" class="border-bottom text-decoration-none text-dark d-inline-block"
             style="font-size: 20px;">
             Overzicht producten
-        </a> --}}
+        </a>
     </div>
 </body>
 
