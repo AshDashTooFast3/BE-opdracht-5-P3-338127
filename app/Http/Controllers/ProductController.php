@@ -27,9 +27,11 @@ class ProductController extends Controller
 
     public function index()
     {
+        $producten = $this->ProductModel->pakAlleProducten();
 
         return view('producten.index', [
-            'title' => 'Overzicht producten',
+            'titel' => 'Overzicht producten',
+            'producten'=> $producten
         ]);
     }
 }

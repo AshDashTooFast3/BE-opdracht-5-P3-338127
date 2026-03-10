@@ -9,7 +9,7 @@ BEGIN
     SELECT DISTINCT
         LEV.Naam AS LeverancierNaam,
         LEV.Contactpersoon,
-        PROD.Naam,
+        PROD.Naam AS ProductNaam,
         MAG.AantalAanwezig
     FROM Product PROD
     INNER JOIN Magazijn MAG ON PROD.ID = MAG.ProductId

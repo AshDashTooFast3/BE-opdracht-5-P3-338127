@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Product extends Model
 {
@@ -24,5 +25,10 @@ class Product extends Model
     public function magazijnen()
     {
         return $this->hasMany(Magazijn::class, 'ProductId');
+    }
+
+    public function pakAlleProducten()
+    {
+        return DB::select('CALL pakAlleProducten()');
     }
 }

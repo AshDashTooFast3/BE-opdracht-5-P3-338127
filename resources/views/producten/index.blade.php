@@ -27,13 +27,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($ProductVanEenAllergeen as $product)
+                    @forelse ($producten as $product)
                         <tr>
+                            <td>{{ $product->LeverancierNaam }}</td>
+                            <td>{{ $product->Contactpersoon }}</td>
                             <td>{{ $product->ProductNaam }}</td>
-                            <td>{{ $product->AllergeenNaam }}</td>
-                            <td>{{ $product->Omschrijving }}</td>
 
-                            <td class="{{ $product->AantalAanwezig == 0 ? 'text-danger' : 'text-success' }}">
+                            <td class="{{ $product->AantalAanwezig == 0 || $product->AantalAanwezig === null ? 'text-danger' : 'text-success' }}">
                                 {{ $product->AantalAanwezig ?? 0 }}
                             </td>
 
