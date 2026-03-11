@@ -12,17 +12,22 @@ return new class extends Migration
     {
         DB::statement('DROP PROCEDURE IF EXISTS pakAlleProducten;');
         DB::statement('
-        CREATE PROCEDURE pakAlleProducten()
+        CREATE PROCEDURE pakAlleProducten(
+            IN perPage INT,
+            IN offset INT
+        )
         BEGIN
             SELECT DISTINCT
-                LEV.Naam AS LeverancierNaam,
-                LEV.Contactpersoon,
-                PROD.Naam AS ProductNaam,
-                MAG.AantalAanwezig
+            PROD.Id AS ProductId,
+            LEV.Naam AS LeverancierNaam,
+            LEV.Contactpersoon,
+            PROD.Naam AS ProductNaam,
+            MAG.AantalAanwezig
             FROM Product PROD
             INNER JOIN Magazijn MAG ON PROD.ID = MAG.ProductId
             INNER JOIN ProductPerLeverancier PPL ON PPL.ProductId = PROD.Id
-            INNER JOIN Leverancier LEV ON PPL.LeverancierId = LEV.Id;
+            INNER JOIN Leverancier LEV ON PPL.LeverancierId = LEV.Id
+            LIMIT perPage OFFSET offset;
         END
         ');
     }
@@ -30,8 +35,5 @@ return new class extends Migration
     /**
      * Reverse the migrations.
      */
-    public function down(): void
-    {
-
-    }
+    public function down(): void {}
 };

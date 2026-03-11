@@ -37,12 +37,12 @@
                                 {{ $product->AantalAanwezig ?? 0 }}
                             </td>
 
-                            {{-- <td class="text-center">
-                                <a href="{{ route('leveranciers.index', $product->LeverancierId) }}"
+                            <td class="text-center">
+                                <a href="{{ route('producten.specifiek', $product->ProductId) }}"
                                     class="btn btn-primary btn-sm">
                                     <i class="bi bi-info-circle-fill"></i>
                                 </a>
-                            </td> --}}
+                            </td>
                         </tr>
                     @empty
                         <tr>

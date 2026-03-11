@@ -60,4 +60,12 @@ class ProductController extends Controller
             'producten' => $paginator,
         ]);
     }
+
+    public function Specifiek() {
+
+    
+        return view('producten.specifiek', [
+            'titel' => 'Specificatie geleverde producten',
+        ]);
+    }
 }

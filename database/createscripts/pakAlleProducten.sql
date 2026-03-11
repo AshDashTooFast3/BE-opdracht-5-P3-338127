@@ -10,6 +10,7 @@ CREATE PROCEDURE pakAlleProducten(
 )
 BEGIN
     SELECT DISTINCT
+        PROD.Id AS ProductId,
         LEV.Naam AS LeverancierNaam,
         LEV.Contactpersoon,
         PROD.Naam AS ProductNaam,
