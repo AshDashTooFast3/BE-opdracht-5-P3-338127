@@ -9,37 +9,42 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-
 <body class="mt-4">
     <div class="container d-flex justify-content-center">
         <div class="col-md-10">
-            <h1>{{ $titel }}</h1>
+
+            {{-- Header met titel en form op één lijn --}}
             <form method="GET" action="{{ route('producten.store') }}" class="mb-4">
-                <div class="row g-3">
-                    <div class="col-md-6">
-                        <label for="startDatum" class="form-label">Startdatum</label>
+                <div class="d-flex align-items-center gap-3 flex-wrap">
+                    <h1 class="mb-0">{{ $titel }}</h1>
+
+                    <div class="d-flex align-items-center gap-2">
+                        <label for="startDatum" class="form-label mb-0">Startdatum</label>
                         <input type="date" id="startDatum" name="startDatum" class="form-control"
                             value="{{ request('startDatum') }}" required>
                     </div>
-                    <div class="col-md-6">
-                        <label for="eindDatum" class="form-label">Einddatum</label>
+
+                    <div class="d-flex align-items-center gap-2">
+                        <label for="eindDatum" class="form-label mb-0">Einddatum</label>
                         <input type="date" id="eindDatum" name="eindDatum" class="form-control"
                             value="{{ request('eindDatum') }}" required>
                     </div>
+
+                    <button type="submit" class="btn btn-primary">Maak selectie</button>
                 </div>
-                <button type="submit" class="btn btn-primary mt-3">Maak selectie</button>
             </form>
+
             <hr class="my-4" />
 
             {{-- Producten tabel --}}
             <table class="table table-hover table-striped table-bordered">
                 <thead>
                     <tr>
-                        <th>Naam Product</th>
-                        <th>Naam Allergeen</th>
-                        <th>Omschrijving</th>
-                        <th>Aantal Aanwezig</th>
-                        <th class="text-center">Info</th>
+                        <th>Naam Leverancier</th>
+                        <th>Contactpersoon</th>
+                        <th>Productnaam</th>
+                        <th>Totaal geleverd</th>
+                        <th class="text-center">Specificatie</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -48,12 +53,10 @@
                             <td>{{ $product->LeverancierNaam }}</td>
                             <td>{{ $product->Contactpersoon }}</td>
                             <td>{{ $product->ProductNaam }}</td>
-
                             <td
                                 class="{{ $product->AantalAanwezig == 0 || $product->AantalAanwezig === null ? 'text-danger' : 'text-success' }}">
                                 {{ $product->AantalAanwezig ?? 0 }}
                             </td>
-
                             <td class="text-center">
                                 <a href="{{ route('producten.specifiek', $product->ProductId) }}"
                                     class="btn btn-primary btn-sm">
@@ -68,15 +71,14 @@
                     @endforelse
                 </tbody>
             </table>
+
             <div class="d-flex justify-content-between align-items-center">
-                <!-- Paginatie -->
                 <div class="mt-3">
                     {{ $producten->appends(request()->query())->links('pagination::bootstrap-4') }}
                 </div>
-                <a href="{{ route('welcome') }}" class="btn btn-secondary">
-                    Home
-                </a>
+                <a href="{{ route('welcome') }}" class="btn btn-secondary">Home</a>
             </div>
+
         </div>
     </div>
 </body>
