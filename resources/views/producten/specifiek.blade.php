@@ -20,9 +20,8 @@
                 <p><strong>Startdatum:</strong> {{ request('startDatum') }}</p>
                 <p><strong>Einddatum:</strong> {{ request('eindDatum') }}</p>
                 @forelse ($productinfo as $product)
-                    <p><strong>Productnaam:</strong> {{ $product->Naam }}</p>
-                    <p><strong>Allergenen:</strong> {{ $product->Allergenen }}</p>
-                    
+                    <p><strong>Productnaam:</strong> {{ $product->Naam ?? 'Product niet gevonden' }}</p>
+                    <p><strong>Allergenen:</strong> {{ $product->Allergenen ?? 'Geen allergeen bekend' }}</p>
                 @empty
                     <p><strong>Productnaam:</strong> Product niet gevonden</p>
                     <p><strong>Allergenen:</strong> Geen allergeen bekend</p>
