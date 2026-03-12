@@ -9,3 +9,4 @@ Route::get('/', function () {
 
 Route::get('/producten', [ProductController::class, 'index'])->name('producten.index');
 Route::get('/producten/specifiek/{id}', [ProductController::class, 'specifiek'])->name('producten.specifiek');
+Route::get('/producten/store', [ProductController::class, 'store'])->name('producten.store');

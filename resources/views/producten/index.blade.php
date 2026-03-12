@@ -1,4 +1,3 @@
-@vite(['resources/css/app.css', 'resources/js/app.js'])
 <!DOCTYPE html>
 <html lang="nl">
 
@@ -7,13 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $titel }}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
+
 
 <body class="mt-4">
     <div class="container d-flex justify-content-center">
         <div class="col-md-10">
             <h1>{{ $titel }}</h1>
-            <form method="GET" action="{{ route('producten.index') }}" class="mb-4">
+            <form method="GET" action="{{ route('producten.store') }}" class="mb-4">
                 <div class="row g-3">
                     <div class="col-md-6">
                         <label for="startDatum" class="form-label">Startdatum</label>

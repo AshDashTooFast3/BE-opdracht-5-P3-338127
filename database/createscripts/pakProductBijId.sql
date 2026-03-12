@@ -5,9 +5,7 @@ DROP PROCEDURE IF EXISTS pakProductBijId;
 DELIMITER $$
 
 CREATE PROCEDURE pakProductBijId(
-    IN p_productId INT,
-    IN p_startDatum DATE,
-    IN p_eindDatum DATE
+    IN p_productId INT
 )
 BEGIN
     SELECT DISTINCT
@@ -21,9 +19,8 @@ BEGIN
     LEFT JOIN ProductPerLeverancier ppl ON p.Id = ppl.ProductId
     LEFT JOIN Leverancier l ON ppl.LeverancierId = l.Id
     WHERE p.Id = p_productId
-        AND ppl.DatumLevering BETWEEN p_startDatum AND p_eindDatum
-        AND p.IsActief = 1
-        AND ppl.IsActief = 1;
 END$$
 
 DELIMITER ;
+
+CALL pakProductBijId(1);

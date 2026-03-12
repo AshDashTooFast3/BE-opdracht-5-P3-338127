@@ -36,4 +36,9 @@ class Product extends Model
     {
         return DB::select('CALL pakProductBijId(?, ?, ?)', [$productId, $startDatum, $eindDatum]);
     }
+
+    public function pakProductenBijDatum(string $startDatum, string $eindDatum, int $perPage, int $offset)
+    {
+        return DB::select('CALL pakProductenBijDatum(?, ?, ?, ?)', [$startDatum, $eindDatum, $perPage, $offset]);
+    }
 }

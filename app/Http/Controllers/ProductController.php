@@ -55,34 +55,35 @@ class ProductController extends Controller
             ['path' => $request->url(), 'query' => $request->query()]
         );
 
-        // Haal de allergenen op voor de filter
-        $allergenen = $this->AllergeenModel->all();
-
-        // Filter op datums als deze zijn meegegeven
-        if ($request->filled(['startDatum', 'eindDatum'])) {
-            $results = $this->ProductModel->pakProductenBijDatum(
-                $request->input('startDatum'),
-                $request->input('eindDatum'),
-                $perPage,
-                $offset
-            );
-            $data = collect($results);
-            $total = DB::table('Product')->whereBetween('created_at', [
-                $request->input('startDatum'),
-                $request->input('eindDatum'),
-            ])->count();
-            $paginator = new LengthAwarePaginator(
-                $data,
-                $total,
-                $perPage,
-                $page,
-                ['path' => $request->url(), 'query' => $request->query()]
-            );
-        }
-
         return view('producten.index', [
             'titel' => 'Overzicht producten',
             'producten' => $paginator,
+        ]);
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'startDatum' => 'required|date',
+            'eindDatum' => 'required|date|after_or_equal:startDatum',
+        ]);
+
+        $page = $request->query('page', 1);
+        $perPage = 4;
+        $offset = ($page - 1) * $perPage;
+
+        $resultaten = $this->ProductModel->pakProductenBijDatum(
+            $validated['startDatum'],
+            $validated['eindDatum'],
+            $perPage,
+            $offset
+        );
+
+        dd($resultaten);
+
+        return view('producten.index', [
+            'startDatum' => $request->input('startDatum'),
+            'eindDatum' => $request->input('eindDatum'),
         ]);
     }
 
