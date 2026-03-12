@@ -13,6 +13,21 @@
     <div class="container d-flex justify-content-center">
         <div class="col-md-10">
             <h1>{{ $titel }}</h1>
+            <form method="GET" action="{{ route('producten.index') }}" class="mb-4">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="startDatum" class="form-label">Startdatum</label>
+                        <input type="date" id="startDatum" name="startDatum" class="form-control"
+                            value="{{ request('startDatum') }}" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="eindDatum" class="form-label">Einddatum</label>
+                        <input type="date" id="eindDatum" name="eindDatum" class="form-control"
+                            value="{{ request('eindDatum') }}" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Maak selectie</button>
+            </form>
             <hr class="my-4" />
 
             {{-- Producten tabel --}}
@@ -33,7 +48,8 @@
                             <td>{{ $product->Contactpersoon }}</td>
                             <td>{{ $product->ProductNaam }}</td>
 
-                            <td class="{{ $product->AantalAanwezig == 0 || $product->AantalAanwezig === null ? 'text-danger' : 'text-success' }}">
+                            <td
+                                class="{{ $product->AantalAanwezig == 0 || $product->AantalAanwezig === null ? 'text-danger' : 'text-success' }}">
                                 {{ $product->AantalAanwezig ?? 0 }}
                             </td>
 

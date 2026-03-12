@@ -14,23 +14,7 @@
         <div class="col-md-10">
             <h1>{{ $titel }}</h1>
             <hr class="my-4" />
-
-            <form method="GET" action="{{ route('producten.specifiek', $productId) }}" class="mb-4">
-                <div class="row g-3">
-                    <div class="col-md-6">
-                        <label for="startDatum" class="form-label">Startdatum</label>
-                        <input type="date" id="startDatum" name="startDatum" class="form-control"
-                            value="{{ request('startDatum') }}" required>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="eindDatum" class="form-label">Einddatum</label>
-                        <input type="date" id="eindDatum" name="eindDatum" class="form-control"
-                            value="{{ request('eindDatum') }}" required>
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-primary mt-3">Zoeken</button>
-            </form>
-
+            
             @if ($resultaten !== null)
                 @if (count($resultaten) > 0)
                     <table class="table table-striped table-bordered">
