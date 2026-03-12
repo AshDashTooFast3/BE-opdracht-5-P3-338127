@@ -61,11 +61,21 @@ class ProductController extends Controller
         ]);
     }
 
-    public function Specifiek() {
+    public function Specifiek(Request $request, int $id) {
+        $resultaten = null;
 
-    
+        if ($request->filled(['startDatum', 'eindDatum'])) {
+            $resultaten = $this->ProductModel->pakProductBijId(
+                $id,
+                $request->input('startDatum'),
+                $request->input('eindDatum')
+            );
+        }
+
         return view('producten.specifiek', [
-            'titel' => 'Specificatie geleverde producten',
+            'titel'      => 'Specificatie geleverde producten',
+            'productId'  => $id,
+            'resultaten' => $resultaten,
         ]);
     }
 }
