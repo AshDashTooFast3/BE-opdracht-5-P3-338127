@@ -71,7 +71,7 @@
             <div class="d-flex justify-content-between align-items-center">
                 <!-- Paginatie -->
                 <div class="mt-3">
-                    {{ $producten->links('pagination::bootstrap-4') }}
+                    {{ $producten->appends(request()->query())->links('pagination::bootstrap-4') }}
                 </div>
                 <a href="{{ route('welcome') }}" class="btn btn-secondary">
                     Home

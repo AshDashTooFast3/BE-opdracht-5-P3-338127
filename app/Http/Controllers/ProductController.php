@@ -82,8 +82,11 @@ class ProductController extends Controller
         // Data
         $data = collect($results);
 
+
         // Totaal apart berekenen
-        $total = DB::table('Product')->count();
+        $total = DB::table('ProductPerLeverancier')
+        ->whereBetween('Datumlevering', [$validated['startDatum'], $validated['eindDatum']])
+        ->count();
 
         // Laravel paginator
         $paginator = new LengthAwarePaginator(
