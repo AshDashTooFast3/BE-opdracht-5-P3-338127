@@ -21,13 +21,13 @@
                     <div class="d-flex align-items-center gap-2">
                         <label for="startDatum" class="form-label mb-0">Startdatum</label>
                         <input type="date" id="startDatum" name="startDatum" class="form-control"
-                            value="{{ request('startDatum') }}" required>
+                            value="{{ request('startDatum', session('startDatum')) }}" required>
                     </div>
 
                     <div class="d-flex align-items-center gap-2">
                         <label for="eindDatum" class="form-label mb-0">Einddatum</label>
                         <input type="date" id="eindDatum" name="eindDatum" class="form-control"
-                            value="{{ request('eindDatum') }}" required>
+                            value="{{ request('eindDatum', session('eindDatum')) }}" required>
                     </div>
 
                     <button type="submit" class="btn btn-primary">Maak selectie</button>
@@ -58,7 +58,7 @@
                                 {{ $product->AantalAanwezig ?? 0 }}
                             </td>
                             <td class="text-center">
-                                <a href="{{ route('producten.specifiek', $product->ProductId) }}"
+                                <a href="{{ route('producten.specifiek', ['id' => $product->ProductId, 'startDatum' => request('startDatum'), 'eindDatum' => request('eindDatum')]) }}"
                                     class="btn btn-primary btn-sm">
                                     <i class="bi bi-info-circle-fill"></i>
                                 </a>

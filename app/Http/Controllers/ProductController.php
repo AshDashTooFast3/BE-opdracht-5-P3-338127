@@ -67,6 +67,8 @@ class ProductController extends Controller
             'startDatum' => 'required|date',
             'eindDatum' => 'required|date|after_or_equal:startDatum',
         ]);
+        // Sla datums op in sessie
+        session(['startDatum' => $validated['startDatum'], 'eindDatum' => $validated['eindDatum']]);
 
         $page = $request->query('page', 1);
         $perPage = 4;
@@ -82,11 +84,10 @@ class ProductController extends Controller
         // Data
         $data = collect($results);
 
-
         // Totaal apart berekenen
         $total = DB::table('ProductPerLeverancier')
-        ->whereBetween('Datumlevering', [$validated['startDatum'], $validated['eindDatum']])
-        ->count();
+            ->whereBetween('Datumlevering', [$validated['startDatum'], $validated['eindDatum']])
+            ->count();
 
         // Laravel paginator
         $paginator = new LengthAwarePaginator(
@@ -99,8 +100,8 @@ class ProductController extends Controller
 
         return view('producten.index', [
             'titel' => 'Overzicht producten',
-            'startDatum' => $request->input('startDatum'),
-            'eindDatum' => $request->input('eindDatum'),
+            'startDatum' => $request->input('startDatum', session('startDatum')),
+            'eindDatum' => $request->input('eindDatum', session('eindDatum')),
             'producten' => $paginator,
         ]);
     }
@@ -108,6 +109,7 @@ class ProductController extends Controller
     public function Specifiek(Request $request, int $id)
     {
         $resultaten = null;
+        $product = $this->ProductModel->pakProductInfo($id);
 
         if ($request->filled(['startDatum', 'eindDatum'])) {
             $resultaten = $this->ProductModel->pakProductBijId(
@@ -120,6 +122,7 @@ class ProductController extends Controller
         return view('producten.specifiek', [
             'titel' => 'Specificatie geleverde producten',
             'productId' => $id,
+            'productinfo' => $product,
             'resultaten' => $resultaten,
         ]);
     }
