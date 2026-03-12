@@ -72,18 +72,33 @@ class ProductController extends Controller
         $perPage = 4;
         $offset = ($page - 1) * $perPage;
 
-        $resultaten = $this->ProductModel->pakProductenBijDatum(
+        $results = $this->ProductModel->pakProductenBijDatum(
             $validated['startDatum'],
             $validated['eindDatum'],
             $perPage,
             $offset
         );
 
-        dd($resultaten);
+        // Data
+        $data = collect($results);
+
+        // Totaal apart berekenen
+        $total = DB::table('Product')->count();
+
+        // Laravel paginator
+        $paginator = new LengthAwarePaginator(
+            $data,
+            $total,
+            $perPage,
+            $page,
+            ['path' => $request->url(), 'query' => $request->query()]
+        );
 
         return view('producten.index', [
+            'titel' => 'Overzicht producten',
             'startDatum' => $request->input('startDatum'),
             'eindDatum' => $request->input('eindDatum'),
+            'producten' => $paginator,
         ]);
     }
 
