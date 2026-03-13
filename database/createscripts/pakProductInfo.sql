@@ -12,7 +12,6 @@ BEGIN
         p.Id,
         p.Naam,
         p.Barcode,
-        a.Naam AS AllergeenNaam,
         GROUP_CONCAT(a.Naam SEPARATOR ", ") AS Allergenen
     FROM Product p
     LEFT JOIN ProductPerAllergeen ppa ON p.Id = ppa.ProductId
