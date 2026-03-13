@@ -66,7 +66,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="text-center">Geen producten bekend</td>
+                            <td colspan="5" class="text-center">Er zijn geen leveringen gevonden in deze periode</td>
                         </tr>
                     @endforelse
                 </tbody>
