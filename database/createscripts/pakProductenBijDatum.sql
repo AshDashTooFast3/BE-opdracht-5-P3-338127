@@ -10,7 +10,7 @@ CREATE PROCEDURE pakProductenBijDatum(
     IN p_offset INT
 )
 BEGIN
-    SELECT 
+    SELECT DISTINCT
         PROD.Id AS ProductId,
         PROD.Naam AS ProductNaam,
         PROD.Barcode,
