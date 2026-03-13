@@ -18,7 +18,7 @@ BEGIN
     MIN(PPL.DatumLevering) AS DatumLevering,
     MIN(LEV.Naam) AS LeverancierNaam,
     MIN(LEV.Contactpersoon) AS Contactpersoon,
-    MAX(MAG.AantalAanwezig) AS AantalAanwezig
+    SUM(PPL.Aantal) AS Aantal
 FROM Product PROD
 INNER JOIN ProductPerLeverancier PPL ON PROD.Id = PPL.ProductId
 INNER JOIN Leverancier LEV ON PPL.LeverancierId = LEV.Id

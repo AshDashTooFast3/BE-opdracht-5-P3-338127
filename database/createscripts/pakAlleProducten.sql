@@ -9,16 +9,21 @@ CREATE PROCEDURE pakAlleProducten(
     IN p_offset INT
 )
 BEGIN
-    SELECT DISTINCT
+    SELECT
         PROD.Id AS ProductId,
         LEV.Naam AS LeverancierNaam,
         LEV.Contactpersoon,
         PROD.Naam AS ProductNaam,
-        MAG.AantalAanwezig
+        SUM(PPL.Aantal) AS Aantal
     FROM Product PROD
-    INNER JOIN Magazijn MAG ON PROD.ID = MAG.ProductId
-    INNER JOIN ProductPerLeverancier PPL ON PPL.ProductId = PROD.Id
+    INNER JOIN (
+        SELECT ProductId, MIN(LeverancierId) AS LeverancierId
+        FROM ProductPerLeverancier
+        GROUP BY ProductId
+    ) PPL_MIN ON PPL_MIN.ProductId = PROD.Id
+    INNER JOIN ProductPerLeverancier PPL ON PPL.ProductId = PROD.Id AND PPL.LeverancierId = PPL_MIN.LeverancierId
     INNER JOIN Leverancier LEV ON PPL.LeverancierId = LEV.Id
+    GROUP BY PROD.Id, LEV.Naam, LEV.Contactpersoon, PROD.Naam
     LIMIT p_perPage OFFSET p_offset;
 END $$
 

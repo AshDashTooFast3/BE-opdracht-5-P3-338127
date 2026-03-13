@@ -54,8 +54,8 @@
                             <td>{{ $product->Contactpersoon }}</td>
                             <td>{{ $product->ProductNaam }}</td>
                             <td
-                                class="{{ $product->AantalAanwezig == 0 || $product->AantalAanwezig === null ? 'text-danger' : 'text-success' }}">
-                                {{ $product->AantalAanwezig ?? 0 }}
+                                class="{{ $product->Aantal == 0 || $product->Aantal === null ? 'text-danger' : 'text-success' }}">
+                                {{ $product->Aantal ?? 0 }}
                             </td>
                             <td class="text-center">
                                 <a href="{{ route('producten.specifiek', ['id' => $product->ProductId, 'startDatum' => request('startDatum'), 'eindDatum' => request('eindDatum')]) }}"
