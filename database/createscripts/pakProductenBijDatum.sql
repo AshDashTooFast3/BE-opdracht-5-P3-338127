@@ -10,22 +10,23 @@ CREATE PROCEDURE pakProductenBijDatum(
     IN p_offset INT
 )
 BEGIN
-    SELECT DISTINCT
-        PROD.Id AS ProductId,
-        PROD.Naam AS ProductNaam,
-        PROD.Barcode,
-        PPL.DatumAangemaakt,
-        PPL.DatumLevering,
-        LEV.Naam AS LeverancierNaam,
-        LEV.Contactpersoon,
-        MAG.AantalAanwezig
-    FROM Product PROD
-    INNER JOIN ProductPerLeverancier PPL ON PROD.Id = PPL.ProductId
-    INNER JOIN Leverancier LEV ON PPL.LeverancierId = LEV.Id
-    INNER JOIN Magazijn MAG ON PROD.Id = MAG.ProductId
-    WHERE PPL.DatumLevering BETWEEN Startdatum AND Einddatum
-    ORDER BY PROD.Naam
-    LIMIT p_perPage OFFSET p_offset;
+  SELECT DISTINCT
+    PROD.Id AS ProductId,
+    PROD.Naam AS ProductNaam,
+    PROD.Barcode,
+    MIN(PPL.DatumAangemaakt) AS DatumAangemaakt,
+    MIN(PPL.DatumLevering) AS DatumLevering,
+    MIN(LEV.Naam) AS LeverancierNaam,
+    MIN(LEV.Contactpersoon) AS Contactpersoon,
+    MAX(MAG.AantalAanwezig) AS AantalAanwezig
+FROM Product PROD
+INNER JOIN ProductPerLeverancier PPL ON PROD.Id = PPL.ProductId
+INNER JOIN Leverancier LEV ON PPL.LeverancierId = LEV.Id
+INNER JOIN Magazijn MAG ON PROD.Id = MAG.ProductId
+WHERE PPL.DatumLevering BETWEEN Startdatum AND Einddatum
+GROUP BY PROD.Id, PROD.Naam, PROD.Barcode
+ORDER BY PROD.Naam
+LIMIT p_perPage OFFSET p_offset;
 END$$
 
 DELIMITER ;
