@@ -22,17 +22,17 @@ CREATE TABLE Contact (
     Stad VARCHAR(100) NOT NULL,
     IsActief BIT NOT NULL DEFAULT 1,
     Opmerking VARCHAR(255) NULL,
-    DatumAangemaakt DATETIME(6) NOT NULL DEFAULT SYSDATE(6),
-    DatumGewijzigd DATETIME(6) NOT NULL DEFAULT SYSDATE(6)
+    DatumAangemaakt DATETIME(6) NOT NULL DEFAULT NOW(6),
+    DatumGewijzigd DATETIME(6) NOT NULL DEFAULT NOW(6)
 );
 
 INSERT INTO Contact (Straat, Huisnummer, Postcode, Stad, IsActief, Opmerking, DatumAangemaakt, DatumGewijzigd) VALUES
-('Van Gilslaan', '34', '1045CB', 'Hilvarenbeek', 1, NULL, SYSDATE(6), SYSDATE(6)),
-('Den Dolderpad', '2', '1067RC', 'Utrecht', 1, NULL, SYSDATE(6), SYSDATE(6)),
-('Fredo Raalteweg', '257', '1236OP', 'Nijmegen', 1, NULL, SYSDATE(6), SYSDATE(6)),
-('Bertrand Russellhof', '21', '2034AP', 'Den Haag', 1, NULL, SYSDATE(6), SYSDATE(6)),
-('Leon van Bonstraat', '213', '145XC', 'Lunteren', 1, NULL, SYSDATE(6), SYSDATE(6)),
-('Bea van Lingenlaan', '234', '2197FG', 'Sint Pancras', 1, NULL, SYSDATE(6), SYSDATE(6));
+('Van Gilslaan', '34', '1045CB', 'Hilvarenbeek', 1, NULL, NOW(6), NOW(6)),
+('Den Dolderpad', '2', '1067RC', 'Utrecht', 1, NULL, NOW(6), NOW(6)),
+('Fredo Raalteweg', '257', '1236OP', 'Nijmegen', 1, NULL, NOW(6), NOW(6)),
+('Bertrand Russellhof', '21', '2034AP', 'Den Haag', 1, NULL, NOW(6), NOW(6)),
+('Leon van Bonstraat', '213', '145XC', 'Lunteren', 1, NULL, NOW(6), NOW(6)),
+('Bea van Lingenlaan', '234', '2197FG', 'Sint Pancras', 1, NULL, NOW(6), NOW(6));
 
 -- Tabel: Leverancier
 CREATE TABLE Leverancier (
@@ -41,20 +41,21 @@ CREATE TABLE Leverancier (
     ContactPersoon VARCHAR(100) NOT NULL,
     LeverancierNummer VARCHAR(20) NOT NULL,
     Mobiel VARCHAR(20) NOT NULL,
+    ContactId INT UNSIGNED NULL,
     IsActief BIT NOT NULL DEFAULT 1,
     Opmerking VARCHAR(255) NULL,
-    DatumAangemaakt DATETIME(6) NOT NULL DEFAULT SYSDATE(6),
-    DatumGewijzigd DATETIME(6) NOT NULL DEFAULT SYSDATE(6)
+    DatumAangemaakt DATETIME(6) NOT NULL DEFAULT NOW(6),
+    DatumGewijzigd DATETIME(6) NOT NULL DEFAULT NOW(6)
 );
 
 INSERT INTO Leverancier (Id,Naam, ContactPersoon, LeverancierNummer, Mobiel, ContactId, IsActief, Opmerking, DatumAangemaakt, DatumGewijzigd) VALUES
-(1,'Venco', 'Bert van Linge', 'L1029384719', '06-28493827', 1, 1, NULL, SYSDATE(6), SYSDATE(6)),
-(2,'Astra Sweets', 'Jasper del Monte', 'L1029284315', '06-39398734', 2, 1, NULL, SYSDATE(6), SYSDATE(6)),
-(3,'Haribo', 'Sven Stalman', 'L1029324748', '06-24383291', 3, 1, NULL, SYSDATE(6), SYSDATE(6)),
-(4,'Basset', 'Joyce Stelterberg', 'L1023845773', '06-48293823', 4, 1, NULL, SYSDATE(6), SYSDATE(6)),
-(5,'De Bron', 'Remco Veenstra', 'L1023857736', '06-34291234', 5, 0, NULL, SYSDATE(6), SYSDATE(6)),
-(6,'Quality Street', 'Johan Nooij', 'L1029234586', '06-23458456', 6, 1, NULL, SYSDATE(6), SYSDATE(6)),
-(7, 'Hom Ken Food', 'Hom Ken', 'L1029234599', '06-23458477', NULL, 1, NULL, SYSDATE(6), SYSDATE(6));
+(1,'Venco', 'Bert van Linge', 'L1029384719', '06-28493827', 1, 1, NULL, NOW(6), NOW(6)),
+(2,'Astra Sweets', 'Jasper del Monte', 'L1029284315', '06-39398734', 2, 1, NULL, NOW(6), NOW(6)),
+(3,'Haribo', 'Sven Stalman', 'L1029324748', '06-24383291', 3, 1, NULL, NOW(6), NOW(6)),
+(4,'Basset', 'Joyce Stelterberg', 'L1023845773', '06-48293823', 4, 1, NULL, NOW(6), NOW(6)),
+(5,'De Bron', 'Remco Veenstra', 'L1023857736', '06-34291234', 5, 0, NULL, NOW(6), NOW(6)),
+(6,'Quality Street', 'Johan Nooij', 'L1029234586', '06-23458456', 6, 1, NULL, NOW(6), NOW(6)),
+(7, 'Hom Ken Food', 'Hom Ken', 'L1029234599', '06-23458477', NULL, 1, NULL, NOW(6), NOW(6));
 
 -- Tabel: Product
 CREATE TABLE Product (
@@ -192,3 +193,25 @@ INSERT INTO ProductPerLeverancier (Id, LeverancierId, ProductId, DatumLevering, 
 (16, 5, 12, '2023-04-11', 45, NULL, 1, NULL, NOW(6), NOW(6)),
 (17, 5, 13, '2023-04-12', 23, NULL, 1, NULL, NOW(6), NOW(6)),
 (18, 7, 14, '2023-04-14', 20, NULL, 1, NULL, NOW(6), NOW(6));
+
+-- Tabel: ProductEinddatumLevering
+CREATE TABLE ProductEinddatumLevering (
+    Id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    ProductId INT UNSIGNED NOT NULL,
+    EinddatumLevering DATE NOT NULL,
+    IsActief BIT NOT NULL DEFAULT 1,
+    Opmerkingen VARCHAR(250) NULL DEFAULT NULL,
+    DatumAangemaakt DATETIME(6) NOT NULL DEFAULT NOW(6),
+    DatumGewijzigd DATETIME(6) NOT NULL DEFAULT NOW(6),
+    FOREIGN KEY (ProductId) REFERENCES Product(Id) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB;
+
+INSERT INTO ProductEinddatumLevering (Id, ProductId, EinddatumLevering, IsActief, Opmerkingen, DatumAangemaakt, DatumGewijzigd) VALUES
+(1, 1, '2024-06-01', 1, NULL, NOW(6), NOW(6)),
+(2, 2, '2024-05-22', 1, NULL, NOW(6), NOW(6)),
+(3, 3, '2024-05-30', 1, NULL, NOW(6), NOW(6)),
+(4, 4, '2024-05-12', 1, NULL, NOW(6), NOW(6)),
+(5, 7, '2024-05-27', 1, NULL, NOW(6), NOW(6)),
+(6, 10, '2024-05-03', 1, NULL, NOW(6), NOW(6)),
+(7, 11, '2024-02-09', 1, NULL, NOW(6), NOW(6)),
+(8, 14, '2024-01-01', 1, NULL, NOW(6), NOW(6));
